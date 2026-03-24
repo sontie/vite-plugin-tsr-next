@@ -53,7 +53,7 @@ export function scanDirectory(
             importPath,
             is404: false,
             isGlobal404: false,
-            id: generateRouteId(routePath, false, true),
+            id: generateRouteId(routePath, false, true, relativePath),
             isLayout: true,
             children: [],
             parentId: undefined,

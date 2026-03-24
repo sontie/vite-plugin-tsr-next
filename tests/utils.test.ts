@@ -101,6 +101,30 @@ describe('generateRouteId', () => {
   it('should generate splat route id for catch-all', () => {
     expect(generateRouteId('/docs/$', false)).toBe('docs_splatRoute')
   })
+
+  it('should generate RootLayout for root layout without group', () => {
+    expect(generateRouteId('/', false, true, '')).toBe('RootLayout')
+  })
+
+  it('should generate HomeLayout for (home) group layout', () => {
+    expect(generateRouteId('/', false, true, '(home)')).toBe('HomeLayout')
+  })
+
+  it('should generate MainLayout for (main) group layout', () => {
+    expect(generateRouteId('/', false, true, '(main)')).toBe('MainLayout')
+  })
+
+  it('should generate HomeContentLayout for nested group layout', () => {
+    expect(generateRouteId('/content', false, true, '(home)/content')).toBe('HomeContentLayout')
+  })
+
+  it('should generate MainContentLayout for different group same path', () => {
+    expect(generateRouteId('/content', false, true, '(main)/content')).toBe('MainContentLayout')
+  })
+
+  it('should generate contentLayout for non-group nested layout', () => {
+    expect(generateRouteId('/content', false, true, 'content')).toBe('contentLayout')
+  })
 })
 
 describe('convertRedirectPath', () => {

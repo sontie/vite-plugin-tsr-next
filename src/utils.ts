@@ -47,22 +47,32 @@ export function filePathToRoutePath(filePath: string): string {
 /**
  * Generate unique variable name
  */
-export function generateRouteId(routePath: string, is404: boolean, isLayout: boolean = false): string {
+export function generateRouteId(routePath: string, is404: boolean, isLayout: boolean = false, relativePath?: string): string {
   if (is404) {
     return routePath === '/' ? 'NotFoundRoute' : routePath.replace(/^\//, '').replace(/\//g, '_') + 'NotFound'
   }
 
   if (isLayout) {
+    const groupMatch = relativePath?.match(/\(([^)]+)\)/)
+    const groupName = groupMatch ? groupMatch[1].charAt(0).toUpperCase() + groupMatch[1].slice(1) : null
+
     if (routePath === '/') {
-      return 'RootLayout'
+      return groupName ? `${groupName}Layout` : 'RootLayout'
     }
-    return routePath
+
+    const basePart = routePath
       .replace(/^\//, '')
       .replace(/\$([^/]+)/g, '$1')
       .replace(/\$$/g, 'splat')
       .replace(/\//g, '_')
       .replace(/[^a-zA-Z0-9_]/g, '_')
-      + 'Layout'
+
+    if (groupName) {
+      const capitalized = basePart.charAt(0).toUpperCase() + basePart.slice(1)
+      return `${groupName}${capitalized}Layout`
+    }
+
+    return basePart + 'Layout'
   }
 
   if (routePath === '/') {
