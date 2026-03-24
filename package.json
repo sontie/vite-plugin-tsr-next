@@ -12,7 +12,7 @@
   "author": "Gao",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Gao/vite-plugin-tsr-next"
+    "url": "https://github.com/sontie/vite-plugin-tsr-next"
   },
   "license": "MIT",
   "type": "module",
